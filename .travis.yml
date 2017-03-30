@@ -44,9 +44,9 @@ before_install:
           brew update;
           brew install pcre2;
       elif [ ${TRAVIS_OS_NAME} = 'linux' ]; then
-          wget https://sourceforge.net/projects/pcre/files/pcre2/10.23/pcre2-10.23.tar.gz
-          tar xzvf pcre2-10.23.tar.gz
-          pushd pcre2-10.23 && ./configure --prefix=/usr && make && sudo make install && popd
+          wget https://sourceforge.net/projects/pcre/files/pcre2/10.23/pcre2-10.23.tar.gz;
+          tar xzvf pcre2-10.23.tar.gz;
+          pushd pcre2-10.23 && ./configure --prefix=/usr && make && sudo make install && popd;
       fi
 
 script:
