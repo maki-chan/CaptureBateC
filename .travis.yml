@@ -1,0 +1,60 @@
+language: c
+matrix:
+    include:
+        - os: linux
+          dist: trusty
+          compiler: gcc
+          sudo: required
+          addons:
+              apt:
+                  packages:
+                      - libcurl4-openssl-dev
+        - os: linux
+          dist: trusty
+          compiler: clang
+          sudo: required
+          addons:
+              apt:
+                  packages:
+                      - libcurl4-openssl-dev
+        - os: linux
+          compiler: gcc
+          sudo: required
+          addons:
+              apt:
+                  packages:
+                      - libcurl4-openssl-dev
+        - os: linux
+          compiler: clang
+          sudo: required
+          addons:
+              apt:
+                  packages:
+                      - libcurl4-openssl-dev
+        - os: osx
+          osx_image: xcode8.3
+        - os: osx
+          osx_image: xcode7.3
+
+
+
+before_install:
+    - test -n $CC || export CC=gcc
+    - if [ ${TRAVIS_OS_NAME} = 'osx' ]; then
+          brew update;
+          brew install pcre2;
+      elif [ ${TRAVIS_OS_NAME} = 'linux' ]; then
+          wget https://sourceforge.net/projects/pcre/files/pcre2/10.23/pcre2-10.23.tar.gz
+          tar xzvf pcre2-10.23.tar.gz
+          pushd pcre2-10.23 && ./configure --prefix=/usr && make && sudo make install && popd
+      fi
+
+script:
+    - $CC -O3 -o capturebate -lcurl -lpcre2-8 -pthread main.c
+
+notifications:
+    email:
+        recipients:
+            - michael@armbrust.me
+        on_success: change
+        on_failure: always

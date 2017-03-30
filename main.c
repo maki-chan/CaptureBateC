@@ -330,6 +330,7 @@ int main(int argc, char *argv[])
 
                 curl_easy_setopt(curl, CURLOPT_URL, utstring_body(modelurl));
                 curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_cb);
+                // coverity[bad_sizeof]
                 curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void*)(&chunk));
                 curl_easy_setopt(curl, CURLOPT_USERAGENT, "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36");
                 res = curl_easy_perform(curl);
