@@ -10,22 +10,7 @@ matrix:
                   packages:
                       - libcurl4-openssl-dev
         - os: linux
-          dist: trusty
-          compiler: clang
-          sudo: required
-          addons:
-              apt:
-                  packages:
-                      - libcurl4-openssl-dev
-        - os: linux
           compiler: gcc
-          sudo: required
-          addons:
-              apt:
-                  packages:
-                      - libcurl4-openssl-dev
-        - os: linux
-          compiler: clang
           sudo: required
           addons:
               apt:
@@ -50,7 +35,7 @@ before_install:
       fi
 
 script:
-    - $CC -O3 -o capturebate -lcurl -lpcre2-8 -pthread main.c
+    - $CC -O3 main.c -o capturebate -pthread -lcurl -lpcre2-8
 
 notifications:
     email:
