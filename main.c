@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#define _VERSION "0.1.0"
+#define _VERSION "0.1.1"
 #define BUFFER_LEN 1024
 #define PCRE2_CODE_UNIT_WIDTH 8
 
@@ -96,9 +96,10 @@ int dir_exists(const char* absolutePath)
     if (access(absolutePath, 0) == 0)
     {
         struct stat status;
-        stat(absolutePath, &status);
-
-        return (status.st_mode & S_IFDIR) != 0;
+        if (stat(absolutePath, &status) == 0)
+        {
+            return (status.st_mode & S_IFDIR) != 0;
+        }
     }
 
     return 0;
@@ -329,7 +330,7 @@ int main(int argc, char *argv[])
 
                 curl_easy_setopt(curl, CURLOPT_URL, utstring_body(modelurl));
                 curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_cb);
-                curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&chunk);
+                curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void*)(&chunk));
                 curl_easy_setopt(curl, CURLOPT_USERAGENT, "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36");
                 res = curl_easy_perform(curl);
 
@@ -365,7 +366,7 @@ int main(int argc, char *argv[])
                             }
 
                             thread = (struct threads*)malloc(sizeof(struct threads));
-                            thread->key = (char*)malloc((strlen(*p) + 1) * sizeof(char*));
+                            thread->key = (char*)malloc((strlen(*p) + 1) * sizeof(char));
                             thread->running = 1;
                             strncpy(thread->key, *p, strlen(*p));
                             thread->key[strlen(*p)] = '\0';
