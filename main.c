@@ -249,7 +249,7 @@ int main(int argc, char *argv[])
         utstring_printf(outdir, "%s", separator_str);
     }
 
-    regex = pcre2_compile((const unsigned char*)"http((?!_fast).)*_aac/playlist\\.m3u8", PCRE2_ZERO_TERMINATED, 0, &errorcode, &erroroffset, NULL);
+    regex = pcre2_compile((const unsigned char*)"http.*_aac/playlist\\.m3u8", PCRE2_ZERO_TERMINATED, 0, &errorcode, &erroroffset, NULL);
     if (regex == NULL)
     {
         fprintf(stderr, "Could not compile regular expression!\n");
