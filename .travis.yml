@@ -35,7 +35,7 @@ before_install:
       fi
 
 script:
-    - $CC -O3 main.c -o capturebate -pthread -lcurl -lpcre2-8
+    - make all
 
 notifications:
     email:
