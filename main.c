@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#define _VERSION "0.1.1"
+#define _VERSION "0.1.2"
 #define BUFFER_LEN 1024
 #define PCRE2_CODE_UNIT_WIDTH 8
 
@@ -249,7 +249,7 @@ int main(int argc, char *argv[])
         utstring_printf(outdir, "%s", separator_str);
     }
 
-    regex = pcre2_compile((const unsigned char*)"http.*_aac/playlist\\.m3u8", PCRE2_ZERO_TERMINATED, 0, &errorcode, &erroroffset, NULL);
+    regex = pcre2_compile((const unsigned char*)"http.*/playlist\\.m3u8", PCRE2_ZERO_TERMINATED, 0, &errorcode, &erroroffset, NULL);
     if (regex == NULL)
     {
         fprintf(stderr, "Could not compile regular expression!\n");
