@@ -159,8 +159,8 @@ void *recordstream(void *data)
     utstring_new(outfile);
     utstring_new(command);
 
-    utstring_concat(outfile, args->outdir);
-    utstring_printf(outfile, "%s_%04d-%02d-%02d_%02d-%02d-%02d.mp4", args->thread->key, tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
+    utstring_concat(outfile, args->outdir);/////////////////////////////////////////////////////////////////////
+    utstring_printf(outfile, "%s%c%04d-%02d-%02d_%02d-%02d-%02d_%s.mp4", args->thread->key, separator(), tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec, args->thread->key);
     utstring_printf(command, "ffmpeg -i %s -c:a copy -c:v copy %s", args->streamurl, utstring_body(outfile));
     #ifdef _WIN32
         utstring_printf(command, " > NUL 2>&1");
@@ -168,7 +168,7 @@ void *recordstream(void *data)
         utstring_printf(command, " > /dev/null 2>&1");
     #endif
 
-    printf("Recording for model \"%s\" starting via ffmpeg\nRecorded file will be %s_%04d-%02d-%02d_%02d-%02d-%02d.mp4 in the output folder\n\n", args->thread->key, args->thread->key, tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
+    printf("Recording for model \"%s\" starting via ffmpeg\nRecorded file will be %s%c%04d-%02d-%02d_%02d-%02d-%02d_%s.mp4 in the output folder\n\n", args->thread->key, args->thread->key, separator(), tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec, args->thread->key);
 
     process = popen(utstring_body(command), "r");
     if (process != NULL)
